@@ -18,36 +18,12 @@ export const useAuth = () => {
   useEffect(() => {
     // Get initial session
     const getSession = async () => {
-      try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        // If there's an error getting the session, clear any stored auth data
-        if (error) {
-          console.warn('Session error:', error.message);
-          await supabase.auth.signOut();
-          setAuthState({
-            user: null,
-            session: null,
-            loading: false,
-          });
-          return;
-        }
-        
-        setAuthState({
-          user: session?.user ?? null,
-          session,
-          loading: false,
-        });
-      } catch (error) {
-        console.error('Error getting session:', error);
-        // Clear any invalid session data
-        await supabase.auth.signOut();
-        setAuthState({
-          user: null,
-          session: null,
-          loading: false,
-        });
-      }
+      const { data: { session } } = await supabase.auth.getSession();
+      setAuthState({
+        user: session?.user ?? null,
+        session,
+        loading: false,
+      });
     };
 
     getSession();
@@ -55,12 +31,6 @@ export const useAuth = () => {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        // Handle auth errors by clearing session
-        if (event === 'TOKEN_REFRESHED' && !session) {
-          console.warn('Token refresh failed, clearing session');
-          await supabase.auth.signOut();
-        }
-        
         setAuthState({
           user: session?.user ?? null,
           session,
