@@ -7,7 +7,21 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true,
+    // Handle auth errors gracefully
+    onAuthStateChange: (event, session) => {
+      if (event === 'TOKEN_REFRESHED' && !session) {
+        // Clear invalid session data
+        localStorage.removeItem('supabase.auth.token');
+        window.location.reload();
+      }
+    }
+  }
+});
 
 export type Json =
   | string
