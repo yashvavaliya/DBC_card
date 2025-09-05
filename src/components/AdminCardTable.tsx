@@ -22,6 +22,9 @@ interface BusinessCard {
   user_id: string;
   slug: string | null;
   view_count: number;
+  card_name: string | null;
+  card_type: string | null;
+  is_primary: boolean | null;
   profiles: {
     name: string | null;
     email: string | null;
@@ -257,10 +260,12 @@ export const AdminCardTable: React.FC<AdminCardTableProps> = ({
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">
-                          {card.title || 'Untitled Card'}
+                          {card.card_name || card.title || 'Untitled Card'}
                         </p>
                         <p className="text-sm text-gray-500">
-                          {card.company || 'No company'}
+                          {card.card_type ? card.card_type.charAt(0).toUpperCase() + card.card_type.slice(1) : 'Personal'} 
+                          {card.company && ` • ${card.company}`}
+                          {card.is_primary && ' • Primary'}
                         </p>
                       </div>
                     </div>

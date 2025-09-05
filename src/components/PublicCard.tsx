@@ -100,7 +100,7 @@ export const PublicCard: React.FC = () => {
 
       if (cardError) {
         console.error("Card error:", cardError);
-        setError("Card not found or not published");
+        setError("Card not found or not available");
         return;
       }
 
@@ -573,23 +573,6 @@ export const PublicCard: React.FC = () => {
                       {card.company}
                     </p>
                   )}
-                  {/* {card.position && (
-                    <p
-                      className="text-lg font-medium mb-1"
-                      style={{ color: theme.secondary }}
-                    >
-                      {card.position}
-                    </p>
-                  )}
-                  
-                  {card.company && (
-                    <p
-                      className="text-base opacity-80 mb-2"
-                      style={{ color: theme.text }}
-                    >
-                      {card.company}
-                    </p>
-                  )} */}                  
                     {card.bio && (
                     <p
                       className="text-sm opacity-70"

@@ -20,6 +20,9 @@ interface BusinessCard {
   user_id: string;
   slug: string | null;
   view_count: number;
+  card_name: string | null;
+  card_type: string | null;
+  is_primary: boolean | null;
   profiles: {
     name: string | null;
     email: string | null;

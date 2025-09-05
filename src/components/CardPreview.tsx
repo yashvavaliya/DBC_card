@@ -54,6 +54,8 @@ interface FormData {
   tagline: string;
   profession: string;
   avatar_url: string;
+  card_name: string;
+  card_type: 'personal' | 'business' | 'creative' | 'professional' | 'other';
 
   // Contact Information
   phone: string;
@@ -78,6 +80,7 @@ interface FormData {
     font: string;
   };
   is_published: boolean;
+  is_primary: boolean;
 }
 
 interface CardPreviewProps {
@@ -920,6 +923,16 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
         <div className="p-3 bg-gray-50 rounded-lg">
           <div className="text-xs text-gray-600 space-y-1">
             <div className="flex justify-between">
+              <span>Card Name:</span>
+              <span className="font-medium">
+                {formData.card_name || 'Untitled Card'}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span>Type:</span>
+              <span className="font-medium capitalize">{formData.card_type}</span>
+            </div>
+            <div className="flex justify-between">
               <span>Username:</span>
               <span className="font-medium">
                 /{formData.username || "username"}
@@ -936,6 +949,10 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
             <div className="flex justify-between">
               <span>Reviews:</span>
               <span className="font-medium">{reviews.length}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Primary:</span>
+              <span className="font-medium">{formData.is_primary ? 'Yes' : 'No'}</span>
             </div>
           </div>
         </div>
